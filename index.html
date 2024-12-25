@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile-Friendly Toggles with Table</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-md mx-auto p-4 space-y-6 bg-white shadow rounded-lg">
+    <!-- Toggles -->
+    <div class="space-y-6">
+      <!-- Simple Toggle -->
+      <div class="flex items-center justify-between">
+        <label for="simple-toggle" class="text-sm font-medium text-gray-900">Simple Toggle</label>
+        <div>
+          <input type="checkbox" id="simple-toggle" class="toggle-checkbox hidden">
+          <div class="toggle-label w-12 h-7 bg-gray-300 rounded-full cursor-pointer relative">
+            <div class="toggle-ball w-5 h-5 bg-white rounded-full shadow-md absolute top-1 left-1 transition"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toggle with Icon -->
+      <div class="flex items-center justify-between">
+        <label for="icon-toggle" class="text-sm font-medium text-gray-900">Toggle with Icon</label>
+        <div>
+          <input type="checkbox" id="icon-toggle" class="toggle-checkbox hidden">
+          <div class="toggle-label w-12 h-7 bg-gray-300 rounded-full cursor-pointer relative">
+            <div class="toggle-ball w-5 h-5 bg-white rounded-full shadow-md absolute top-1 left-1 transition flex items-center justify-center">
+              <span class="text-xs text-gray-500">×</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+        <thead class="bg-gray-200 text-gray-700">
+          <tr>
+            <th class="text-left p-2 text-sm font-medium border-b">#</th>
+            <th class="text-left p-2 text-sm font-medium border-b">Feature</th>
+            <th class="text-left p-2 text-sm font-medium border-b">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="p-2 text-sm border-b">1</td>
+            <td class="p-2 text-sm border-b">Simple Toggle</td>
+            <td class="p-2 text-sm border-b">
+              <span id="simple-status" class="text-gray-500">Off</span>
+            </td>
+          </tr>
+          <tr>
+            <td class="p-2 text-sm border-b">2</td>
+            <td class="p-2 text-sm border-b">Toggle with Icon</td>
+            <td class="p-2 text-sm border-b">
+              <span id="icon-status" class="text-gray-500">Off</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Toggle functionality and table update
+    document.querySelectorAll('.toggle-label').forEach(toggle => {
+      toggle.addEventListener('click', function () {
+        const ball = this.querySelector('.toggle-ball');
+        const checkbox = this.previousElementSibling;
+        checkbox.checked = !checkbox.checked;
+        const statusId = checkbox.id === "simple-toggle" ? "simple-status" : "icon-status";
+        const statusElement = document.getElementById(statusId);
+
+        if (checkbox.checked) {
+          this.classList.replace('bg-gray-300', 'bg-blue-500');
+          ball.classList.add('translate-x-5');
+          statusElement.textContent = "On";
+          statusElement.classList.replace('text-gray-500', 'text-green-500');
+        } else {
+          this.classList.replace('bg-blue-500', 'bg-gray-300');
+          ball.classList.remove('translate-x-5');
+          statusElement.textContent = "Off";
+          statusElement.classList.replace('text-green-500', 'text-gray-500');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
